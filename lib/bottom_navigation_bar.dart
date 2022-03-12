@@ -14,7 +14,7 @@ class BottomNavigationBarView extends StatefulWidget {
 }
 
 class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   final List<Widget> _children = [
     const MenuPage(),
     const HomePage(),
