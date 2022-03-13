@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
+import 'package:social_eaters/ui/place_card.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({
@@ -42,12 +43,11 @@ class _MenuPageState extends State<MenuPage> {
               child: ListView.builder(
                 itemCount: places.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Column(
-                      children: [
-                        Text(places[index].name),
-                      ],
-                    ),
+                  return PlaceCard(
+                    placeName: places[index].name,
+                    userComment: places[index].userComment ?? "",
+                    dateCreated: DateTime.now(),
+                    menuUrl: places[index].menuUrl,
                   );
                 },
               ),
