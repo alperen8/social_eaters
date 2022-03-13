@@ -40,7 +40,8 @@ class _SaveMenuPageState extends State<SaveMenuPage> {
                   );
 
                   LocalStorage.instance
-                      .addToStringList(PreferencesKeys.places, place.toJson());
+                      .addToStringList(PreferencesKeys.places, place.toJson())
+                      .then((value) => Navigator.pop(context));
                 },
                 child: const Text("save place"))
           ],
