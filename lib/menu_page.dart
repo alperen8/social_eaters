@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_eaters/features/maps/map_view.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
@@ -33,7 +34,16 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MapViewPage()));
+              },
+              icon: const Icon(Icons.map))
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

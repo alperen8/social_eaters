@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
@@ -32,6 +33,9 @@ class _SaveMenuPageState extends State<SaveMenuPage> {
             Text("tarih: " + date.toString()),
             ElevatedButton(
                 onPressed: () {
+                  // Location location = Location();
+                  // LocationData locationData;
+                  // locationData = await location.getLocation();
                   Place place = Place(
                     menuUrl: widget.menuLink,
                     name: nameController.text,

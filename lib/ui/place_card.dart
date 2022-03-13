@@ -42,7 +42,8 @@ class PlaceCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: buildMessage(context),
-            )
+            ),
+            Text(dateCreated.toString())
           ],
         ),
       ),
