@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:social_eaters/features/save_place.dart';
 
 class ScanMenu extends StatefulWidget {
   const ScanMenu({
@@ -79,7 +80,7 @@ class _QRViewExampleState extends State<ScanMenu> {
   }
 
   Future<void> _launchURL(BuildContext context, String? result) async {
-    await launch(
+    launch(
       result!,
       customTabsOption: CustomTabsOption(
         toolbarColor: Theme.of(context).primaryColor,
@@ -100,6 +101,9 @@ class _QRViewExampleState extends State<ScanMenu> {
         entersReaderIfAvailable: false,
         dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
       ),
-    );
+    ).then((value) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SaveMenuPage(result)));
+    });
   }
 }
