@@ -32,15 +32,16 @@ class _SaveMenuPageState extends State<SaveMenuPage> {
             ),
             Text("tarih: " + date.toString()),
             ElevatedButton(
-                onPressed: () {
-                  // Location location = Location();
-                  // LocationData locationData;
-                  // locationData = await location.getLocation();
+                onPressed: () async {
+                  final Location _location = Location();
+                  LocationData locationData = await _location.getLocation();
                   Place place = Place(
                     menuUrl: widget.menuLink,
                     name: nameController.text,
                     userComment: commentController.text,
                     dateVisited: date,
+                    latitude: locationData.latitude!,
+                    longitude: locationData.longitude!,
                   );
 
                   LocalStorage.instance

@@ -5,12 +5,17 @@ class Place {
   String name;
   String? userComment;
   DateTime dateVisited;
+  //TODO NULL
+  double? latitude;
+  double? longitude;
 
   Place({
     required this.menuUrl,
     required this.name,
     this.userComment,
     required this.dateVisited,
+    required this.latitude,
+    required this.longitude,
   });
 
   Place copyWith({
@@ -18,12 +23,16 @@ class Place {
     String? name,
     String? userComment,
     DateTime? dateVisited,
+    double? latitude,
+    double? longitude,
   }) {
     return Place(
       menuUrl: menuUrl ?? this.menuUrl,
       name: name ?? this.name,
       userComment: userComment ?? this.userComment,
       dateVisited: dateVisited ?? this.dateVisited,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -33,6 +42,8 @@ class Place {
       'name': name,
       'userComment': userComment,
       'dateVisited': dateVisited.millisecondsSinceEpoch,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -42,6 +53,8 @@ class Place {
       name: map['name'] ?? '',
       userComment: map['userComment'],
       dateVisited: DateTime.fromMillisecondsSinceEpoch(map['dateVisited']),
+      latitude: map['latitude']?.toDouble(),
+      longitude: map['longitude']?.toDouble(),
     );
   }
 
@@ -51,7 +64,7 @@ class Place {
 
   @override
   String toString() {
-    return 'Place(menuUrl: $menuUrl, name: $name, userComment: $userComment, dateVisited: $dateVisited)';
+    return 'Place(menuUrl: $menuUrl, name: $name, userComment: $userComment, dateVisited: $dateVisited, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -62,7 +75,9 @@ class Place {
         other.menuUrl == menuUrl &&
         other.name == name &&
         other.userComment == userComment &&
-        other.dateVisited == dateVisited;
+        other.dateVisited == dateVisited &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
@@ -70,6 +85,8 @@ class Place {
     return menuUrl.hashCode ^
         name.hashCode ^
         userComment.hashCode ^
-        dateVisited.hashCode;
+        dateVisited.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode;
   }
 }
