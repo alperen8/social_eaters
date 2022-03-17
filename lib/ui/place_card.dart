@@ -30,7 +30,12 @@ class PlaceCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.place),
+                place.latitude == null
+                    ? const Icon(Icons.place)
+                    : const Icon(
+                        Icons.place,
+                        color: Colors.blue,
+                      ),
                 Text(place.name),
               ],
             ),
