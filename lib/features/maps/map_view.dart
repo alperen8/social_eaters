@@ -46,6 +46,7 @@ class _MapViewPageState extends State<MapViewPage> {
           position: LatLng(place.latitude!, place.longitude!),
           infoWindow: InfoWindow(
               title: place.name,
+              snippet: "tap to see  the menu",
               onTap: () {
                 _launchURL(context, place.menuUrl);
               }),
