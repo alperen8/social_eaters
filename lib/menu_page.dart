@@ -53,12 +53,7 @@ class _MenuPageState extends State<MenuPage> {
               child: ListView.builder(
                 itemCount: places.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return PlaceCard(
-                    placeName: places[index].name,
-                    userComment: places[index].userComment ?? "",
-                    dateCreated: DateTime.now(),
-                    menuUrl: places[index].menuUrl,
-                  );
+                  return PlaceCard(place: places[index]);
                 },
               ),
             ),

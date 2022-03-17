@@ -1,20 +1,15 @@
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:social_eaters/models/place_model.dart';
 
 import '/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class PlaceCard extends StatelessWidget {
-  final String placeName;
-  final String userComment;
-  final DateTime dateCreated;
-  final String menuUrl;
+  final Place place;
 
   const PlaceCard({
     Key? key,
-    required this.placeName,
-    required this.userComment,
-    required this.dateCreated,
-    required this.menuUrl,
+    required this.place,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,14 +31,11 @@ class PlaceCard extends StatelessWidget {
             Row(
               children: [
                 const Icon(Icons.place),
-                Text(placeName),
+                Text(place.name),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: buildMessage(context),
-            ),
-            Text(dateCreated.toString())
+            buildMessage(context),
+            Text(place.dateVisited.toString())
           ],
         ),
       ),
@@ -55,9 +47,10 @@ class PlaceCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-            width: MediaQuery.of(context).size.width * 0.75,
-            child: Text(userComment)),
+        if (place.userComment != null && place.userComment != "")
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.75,
+              child: Text(place.userComment!)),
         context.emptySizedWidthBoxLow,
         IconButton(
             onPressed: () {
@@ -70,7 +63,7 @@ class PlaceCard extends StatelessWidget {
 
   Future<void> _launchURL(BuildContext context) async {
     launch(
-      menuUrl,
+      place.menuUrl,
       customTabsOption: CustomTabsOption(
         toolbarColor: Theme.of(context).primaryColor,
         enableDefaultShare: true,
