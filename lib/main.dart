@@ -8,7 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.preferencesInit();
 
-  Location location = new Location();
+  Location location = Location();
 
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
