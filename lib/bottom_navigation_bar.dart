@@ -41,7 +41,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person_pin),
-            label: ("Ayarlar"),
+            label: ("social page"),
             backgroundColor: Colors.blue.shade400,
           ),
         ],
