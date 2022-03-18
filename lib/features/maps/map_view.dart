@@ -7,6 +7,8 @@ import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
 
 class MapViewPage extends StatefulWidget {
+  const MapViewPage({Key? key}) : super(key: key);
+
   @override
   _MapViewPageState createState() => _MapViewPageState();
 }
