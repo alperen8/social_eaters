@@ -1,4 +1,8 @@
 # This is a generated file; do not edit or check into version control.
+firebase_auth=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.8/
+firebase_auth_web=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.3.8/
+firebase_core=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.12.0/
+firebase_core_web=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.0/
 flutter_custom_tabs=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_custom_tabs-1.0.4/
 flutter_custom_tabs_web=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_custom_tabs_web-1.0.0/
 flutter_plugin_android_lifecycle=/Users/alperenertan/flutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/
