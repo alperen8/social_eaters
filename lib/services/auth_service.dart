@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Authentication {
+class AuthenticationService {
   FirebaseAuth? _auth;
-  static final Authentication _authInstance = Authentication._init();
+  static final AuthenticationService _authInstance =
+      AuthenticationService._init();
 
-  Authentication._init();
+  AuthenticationService._init();
 
-  static Authentication get instance {
+  static AuthenticationService get instance {
     return _authInstance;
   }
 
