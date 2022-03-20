@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:social_eaters/services/auth_service.dart';
+
+import '../../bottom_navigation_bar.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordAgainController =
-      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,35 @@ class _RegisterPageState extends State<RegisterPage> {
                               Icons.person,
                               color: Colors.white,
                             ),
-                            hintText: 'User name',
+                            hintText: 'name',
+                            prefixText: ' ',
+                            hintStyle: TextStyle(color: Colors.white),
+                            focusColor: Colors.white,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                            )),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                            )),
+                          )),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      TextField(
+                          controller: _surnameController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          cursorColor: Colors.white,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            hintText: 'surname',
                             prefixText: ' ',
                             hintStyle: TextStyle(color: Colors.white),
                             focusColor: Colors.white,
@@ -123,47 +155,25 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                         height: size.height * 0.02,
                       ),
-                      TextField(
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          cursorColor: Colors.white,
-                          controller: _passwordAgainController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.vpn_key,
-                              color: Colors.white,
-                            ),
-                            hintText: 'Password again',
-                            prefixText: ' ',
-                            hintStyle: TextStyle(color: Colors.white),
-                            focusColor: Colors.white,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                              color: Colors.white,
-                            )),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                              color: Colors.white,
-                            )),
-                          )),
-                      SizedBox(
-                        height: size.height * 0.08,
-                      ),
                       InkWell(
                         onTap: () {
-                          // _authService
-                          //     .createPerson(
-                          //         _nameController.text,
-                          //         _emailController.text,
-                          //         _passwordController.text)
-                          //     .then((value) {
-                          //   return Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => LoginPage()));
-                          // });
+                          AuthenticationService.instance
+                              .signInWithMail(
+                                  _nameController.text,
+                                  _surnameController.text,
+                                  _emailController.text,
+                                  _passwordController.text)
+                              .then((value) {
+                            if (value) {
+                              return Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BottomNavigationBarView()));
+                            } else {
+                              //TODO ERROR
+                            }
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 5),

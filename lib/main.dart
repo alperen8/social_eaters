@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:social_eaters/features/login/login_page.dart';
 import 'package:social_eaters/firebase_options.dart';
+import 'package:social_eaters/services/auth_service.dart';
 import 'package:social_eaters/services/local_storage.dart';
 
 import 'bottom_navigation_bar.dart';
@@ -14,7 +17,7 @@ Future<void> main() async {
   await LocalStorage.preferencesInit();
 
   Location location = Location();
-
+  AuthenticationService.authInit();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
 
@@ -46,7 +49,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BottomNavigationBarView(),
+      home: FirebaseAuth.instance.currentUser?.uid == null
+          ? const LoginPage()
+          : const BottomNavigationBarView(),
     );
   }
 }

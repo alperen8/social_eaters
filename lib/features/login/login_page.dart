@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:social_eaters/bottom_navigation_bar.dart';
 import 'package:social_eaters/features/login/register_page.dart';
+import 'package:social_eaters/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -95,15 +99,20 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      // _authService
-                      //     .signIn(
-                      //         _emailController.text, _passwordController.text)
-                      //     .then((value) {
-                      //   return Navigator.pushReplacement(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => Main_Page()));
-                      // });
+                      AuthenticationService.instance
+                          .loginWithMail(
+                              _emailController.text, _passwordController.text)
+                          .then((value) {
+                        if (value) {
+                          return Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const BottomNavigationBarView()));
+                        } else {
+                          //TODO ERROR
+                        }
+                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -133,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterPage()));
+                              builder: (context) => const RegisterPage()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
