@@ -29,7 +29,10 @@ class _RegisterPageState extends State<RegisterPage> {
               height: size.height * .7,
               width: size.width * .85,
               decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(.75),
+                  gradient: const LinearGradient(colors: [
+                    Color.fromARGB(212, 211, 186, 42),
+                    Color(0xFFFFBBCF)
+                  ]),
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   boxShadow: [
                     BoxShadow(
@@ -207,27 +210,29 @@ class _RegisterPageState extends State<RegisterPage> {
               EdgeInsets.only(top: size.height * .06, left: size.width * .02),
           child: Align(
             alignment: Alignment.topLeft,
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Icon(
-                    Icons.arrow_back_ios_outlined,
-                    color: Colors.blue.withOpacity(.75),
-                    size: 26,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Color(0xFFFFBBCF),
+                      size: 26,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: size.width * 0.3,
-                ),
-                Text(
-                  "Register",
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue.withOpacity(.75),
-                      fontWeight: FontWeight.bold),
-                )
-              ],
+                  const Text(
+                    "Login",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFFFFBBCF),
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
           ),
         )
