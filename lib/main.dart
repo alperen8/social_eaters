@@ -15,7 +15,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await LocalStorage.preferencesInit();
-
+//
   Location location = Location();
   AuthenticationService.authInit();
   bool _serviceEnabled;
