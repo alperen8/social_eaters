@@ -46,9 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.yellow),
       home: FirebaseAuth.instance.currentUser?.uid == null
           ? const LoginPage()
           : const BottomNavigationBarView(),

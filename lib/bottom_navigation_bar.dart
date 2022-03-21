@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_eaters/config/constanst.dart';
 import 'package:social_eaters/home_page.dart';
 import 'package:social_eaters/menu_page.dart';
 import 'package:social_eaters/social_page.dart';
@@ -25,24 +26,24 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: AppConstants.mainColor,
+        selectedItemColor: Colors.black,
         currentIndex: _currentIndex,
-        type: BottomNavigationBarType.shifting,
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             label: ("menu"),
-            backgroundColor: Colors.blue.shade400,
+            backgroundColor: AppConstants.mainColor,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
+            icon: Icon(Icons.home),
             label: ("home page"),
-            backgroundColor: Colors.blue.shade400,
+            backgroundColor: AppConstants.mainColor,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.person_pin),
+            icon: Icon(Icons.person_pin),
             label: ("social page"),
-            backgroundColor: Colors.blue.shade400,
+            backgroundColor: AppConstants.mainColor,
           ),
         ],
         onTap: (index) {
