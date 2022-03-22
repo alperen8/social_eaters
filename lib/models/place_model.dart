@@ -25,7 +25,7 @@ class Place {
     String? userComment,
     DateTime? dateVisited,
     double? latitude,
-    double? longitude,
+    double? longtitude,
     String? id,
   }) {
     return Place(
@@ -34,7 +34,7 @@ class Place {
       userComment: userComment ?? this.userComment,
       dateVisited: dateVisited ?? this.dateVisited,
       latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
+      longitude: longtitude ?? this.longitude,
       id: id ?? this.id,
     );
   }
@@ -42,12 +42,11 @@ class Place {
   Map<String, dynamic> toMap() {
     return {
       'menuUrl': menuUrl,
-      'name': name,
-      'userComment': userComment,
-      'dateVisited': dateVisited.millisecondsSinceEpoch,
-      'latitude': latitude,
-      'longitude': longitude,
-      'id': id,
+      name ?? 'name': name,
+      userComment ?? 'comment': userComment,
+      'dateVisited': dateVisited.toString(),
+      'latitude': latitude?.toString(),
+      'longtitude': longitude?.toString(),
     };
   }
 

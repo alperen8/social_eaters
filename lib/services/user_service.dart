@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_eaters/config/constanst.dart';
+import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/models/user_model.dart';
 
 class UserService {
@@ -25,6 +27,24 @@ class UserService {
       print("something went wrong");
     } finally {
       return user;
+    }
+  }
+
+  Future<bool> recordPlace(Place place) async {
+    bool hasRecorded = false;
+    Map map = place.toMap();
+    map["userId"] = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      Response response =
+          await Dio().post(AppConstants.apiUrl + "/recordPlace", data: map);
+      if (response.data != null) {
+        hasRecorded = true;
+      }
+    } catch (e) {
+      hasRecorded = false;
+      print("something went wrong");
+    } finally {
+      return hasRecorded;
     }
   }
 
