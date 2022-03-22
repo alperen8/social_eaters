@@ -25,32 +25,47 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppConstants.mainColor,
-        selectedItemColor: Colors.black,
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: ("menu"),
-            backgroundColor: AppConstants.mainColor,
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: ("home page"),
+          child: BottomNavigationBar(
             backgroundColor: AppConstants.mainColor,
+            selectedItemColor: Colors.black,
+            currentIndex: _currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.menu),
+                label: ("menu"),
+                backgroundColor: AppConstants.mainColor,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: ("home page"),
+                backgroundColor: AppConstants.mainColor,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_pin),
+                label: ("social page"),
+                backgroundColor: AppConstants.mainColor,
+              ),
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_pin),
-            label: ("social page"),
-            backgroundColor: AppConstants.mainColor,
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        ),
       ),
       body: _children[_currentIndex],
     );

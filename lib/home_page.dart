@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_eaters/features/scan_menu.dart';
 
+import 'ui/wave_clipper.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
@@ -66,135 +68,59 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 170.0, bottom: 30.0),
-                  child: Container(
-                    height: 120.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black12.withOpacity(0.1),
-                              blurRadius: 10.0,
-                              spreadRadius: 4.0)
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 47.0,
-                              width: 47.0,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: Color(0xFFFAF9FC)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.account_balance_wallet,
-                                  color: Color(0xFFB870D0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ScanMenu()));
+                    },
+                    child: Container(
+                      height: 120.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12.withOpacity(0.1),
+                                blurRadius: 10.0,
+                                spreadRadius: 4.0)
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: 47.0,
+                                width: 47.0,
+                                decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50.0)),
+                                    color: Color(0xFFFAF9FC)),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.qr_code,
+                                    color: Color(0xFFB870D0),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 7.0,
-                            ),
-                            const Text("Send",
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 47.0,
-                              width: 47.0,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: Color(0xFFFAF9FC)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.mobile_screen_share,
-                                  color: Color(0xFFB870D0),
-                                ),
+                              const SizedBox(
+                                height: 7.0,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 7.0,
-                            ),
-                            const Text("Top Up",
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 47.0,
-                              width: 47.0,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: Color(0xFFFAF9FC)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.attach_money,
-                                  color: Color(0xFFB870D0),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 7.0,
-                            ),
-                            const Text("Pay",
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 47.0,
-                              width: 47.0,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: Color(0xFFFAF9FC)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.vertical_align_bottom,
-                                  color: Color(0xFFB870D0),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 7.0,
-                            ),
-                            const Text("Request",
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                      ],
+                              const Text("Scan QR",
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -204,51 +130,36 @@ class _HomePageState extends State<HomePage> {
                 ///
                 Padding(
                     padding: const EdgeInsets.only(top: 72.0, left: 22.0),
-                    child: profile()),
+                    child: header()),
               ],
             ),
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
-                      Text(
-                        "Transactions",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "Sans",
-                            fontWeight: FontWeight.w800,
-                            fontSize: 15.5),
-                      ),
-                      Text(
-                        "See all",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontFamily: "Sans",
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
+            Column(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    Text(
+                      "Last visited places",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Sans",
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15.5),
+                    ),
+                  ],
                 ),
+              ),
 
-                ///
-                /// List Transaction dummy
-                ///
-                _menu(
-                    Icons.gamepad, "Buying PS 5", "Monthly Payment", "-\$510"),
-                _menu(Icons.satellite, "Photo Course", "Monthly Payment",
-                    "-\$50"),
-                _menu(Icons.airport_shuttle, "Car Gas Bill", "Monthly Payment",
-                    "-\$210"),
-                _menu(
-                    Icons.code, "Buying Template", "Monthly Payment", "-\$39"),
-                _menu(Icons.golf_course, "Golf Course", "Monthly Payment",
-                    "-\$90"),
-                _menu(Icons.phone, "Buying Quota", "Monthly Payment", "-\$50"),
-              ],
-            ),
+              ///
+              /// List Transaction dummy
+              ///
+
+              _menu("Place 2", "Comment 1"),
+              _menu("Place 3", "Comment 2"),
+              _menu("Place 4", "Comment 3"),
+              _menu("Place 5", "Comment 4"),
+            ])
           ],
         ),
       ),
@@ -277,7 +188,7 @@ class _HomePageState extends State<HomePage> {
     // );
   }
 
-  Widget _menu(IconData icon, String title, String time, String value) {
+  Widget _menu(String title, String comment) {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
       child: Column(
@@ -288,16 +199,6 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                        color: Color(0xFFA665D1)),
-                    child: const Center(
-                      child: Icon(Icons.menu),
-                    ),
-                  ),
                   const SizedBox(
                     width: 12.0,
                   ),
@@ -314,22 +215,23 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 15.5),
                       ),
                       Text(
-                        time + "asdmasdas",
+                        comment,
                         style: const TextStyle(color: Colors.black45),
                       )
                     ],
                   ),
                 ],
               ),
-              Text(
-                value,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15.5,
+              Container(
+                height: 40.0,
+                width: 40.0,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                    color: Color.fromARGB(255, 233, 207, 250)),
+                child: const Center(
+                  child: Icon(Icons.menu_book),
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(
@@ -355,7 +257,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 40.0,
           width: 40.0,
-          color: Color.fromARGB(31, 143, 106, 5).withOpacity(0.09),
+          color: const Color.fromARGB(31, 143, 106, 5).withOpacity(0.09),
         ),
         clipper: TriangleClipper(),
       ),
@@ -365,7 +267,7 @@ class _HomePageState extends State<HomePage> {
   ///
   /// Create profile widget
   ///
-  Widget profile() {
+  Widget header() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -402,33 +304,6 @@ class _HomePageState extends State<HomePage> {
 ///
 /// Create wave appbar
 ///
-class BottomWaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0.0, size.height - 20);
-
-    var firstControlPoint = Offset(size.width / 4, size.height);
-    var firstEndPoint = Offset(size.width / 2.25, size.height - 30.0);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
-
-    var secondControlPoint =
-        Offset(size.width - (size.width / 3.25), size.height - 65);
-    var secondEndPoint = Offset(size.width, size.height - 40);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
-
-    path.lineTo(size.width, size.height - 40);
-    path.lineTo(size.width, 0.0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 ///
 /// Create triangle clipper
