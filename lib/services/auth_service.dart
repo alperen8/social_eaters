@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:social_eaters/config/constanst.dart';
 import 'package:social_eaters/services/user_service.dart';
 
 class AuthenticationService {
@@ -21,6 +19,10 @@ class AuthenticationService {
 
   Future<void> signOut() async {
     await _auth?.signOut();
+  }
+
+  String getUserId() {
+    return _auth?.currentUser?.uid ?? "";
   }
 
   Future<bool> loginWithMail(String email, String password) async {
@@ -69,11 +71,4 @@ class AuthenticationService {
     }
     return isSignedIn;
   }
-
-  // Future<void> login(String email, String password) async {
-  //   await _auth?.signInWithEmailAndPassword(
-  //     email: email,
-  //     password: password,
-  //   );
-  // }
 }

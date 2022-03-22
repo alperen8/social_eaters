@@ -6,7 +6,6 @@ import 'package:social_eaters/features/login/login_page.dart';
 import 'package:social_eaters/firebase_options.dart';
 import 'package:social_eaters/services/auth_service.dart';
 import 'package:social_eaters/services/local_storage.dart';
-
 import 'bottom_navigation_bar.dart';
 
 Future<void> main() async {

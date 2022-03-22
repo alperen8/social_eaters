@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_eaters/config/constanst.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/models/user_model.dart';
+import 'package:social_eaters/services/auth_service.dart';
 
 class UserService {
   static final UserService _instance = UserService._init();
@@ -33,7 +33,7 @@ class UserService {
   Future<bool> recordPlace(Place place) async {
     bool hasRecorded = false;
     Map map = place.toMap();
-    map["userId"] = FirebaseAuth.instance.currentUser!.uid;
+    map["userId"] = AuthenticationService.instance.getUserId();
     try {
       Response response =
           await Dio().post(AppConstants.apiUrl + "/recordPlace", data: map);

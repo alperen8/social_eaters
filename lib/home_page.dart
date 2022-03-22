@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_eaters/features/scan_menu.dart';
 import 'package:social_eaters/models/place_model.dart';
-import 'package:social_eaters/models/user_model.dart';
+import 'package:social_eaters/services/auth_service.dart';
 import 'package:social_eaters/services/user_service.dart';
 
 import 'ui/wave_clipper.dart';
@@ -96,7 +95,7 @@ class _HomePageState extends State<HomePage> {
 
               ElevatedButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    AuthenticationService.instance.signOut();
                   },
                   child: const Text("signout")),
               ElevatedButton(
