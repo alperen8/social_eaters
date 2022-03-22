@@ -44,7 +44,7 @@ class _MapViewPageState extends State<MapViewPage> {
     for (Place place in places) {
       if (place.latitude != null) {
         markers.add(Marker(
-          markerId: MarkerId(place.name),
+          markerId: MarkerId(place.name ?? "Unnamed Place"),
           position: LatLng(place.latitude!, place.longitude!),
           infoWindow: InfoWindow(
               title: place.name,

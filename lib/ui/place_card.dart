@@ -36,7 +36,7 @@ class PlaceCard extends StatelessWidget {
                         Icons.place,
                         color: Colors.blue,
                       ),
-                Text(place.name),
+                Text(place.name ?? ""),
               ],
             ),
             buildMessage(context),

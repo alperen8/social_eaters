@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_eaters/config/constanst.dart';
+import 'package:social_eaters/services/user_service.dart';
 
 class AuthenticationService {
   FirebaseAuth? _auth;
@@ -20,22 +21,6 @@ class AuthenticationService {
 
   Future<void> signOut() async {
     await _auth?.signOut();
-  }
-
-  recordUser(String? name, String? surname, String? mail, String firebaseId) {
-    Map<String, dynamic> data = {
-      "objects": {
-        "name": name,
-        "surname": surname,
-        "mail": mail,
-        "firebaseId": firebaseId,
-      }
-    };
-    try {
-      Dio().post(AppConstants.apiUrl + "/createUser", data: data);
-    } catch (e) {
-      print(e);
-    }
   }
 
   Future<bool> loginWithMail(String email, String password) async {
@@ -67,7 +52,7 @@ class AuthenticationService {
         email: email,
         password: password,
       );
-      recordUser(
+      await UserService.instance.recordUser(
           name, surname, userCredential.user?.email, userCredential.user!.uid);
 
       if (userCredential.user?.uid != null) {

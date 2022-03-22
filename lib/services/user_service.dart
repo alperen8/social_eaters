@@ -18,13 +18,27 @@ class UserService {
     UserModel? user;
     try {
       Response response = await Dio()
-          .post(AppConstants.apiUrl + "/getUserInfoById", data: data);
+          .get(AppConstants.apiUrl + "/getUserInfoById", queryParameters: data);
       //TODO ["Users"][0] ?? needs solution
       user = UserModel.fromMap(response.data["Users"][0]);
     } catch (e) {
       print("something went wrong");
     } finally {
       return user;
+    }
+  }
+
+  recordUser(String? name, String? surname, String? mail, String id) {
+    Map<String, dynamic> data = {
+      "name": name,
+      "surname": surname,
+      "mail": mail,
+      "id": id,
+    };
+    try {
+      Dio().post(AppConstants.apiUrl + "/createUser", data: data);
+    } catch (e) {
+      print(e);
     }
   }
 }

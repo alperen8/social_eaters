@@ -2,20 +2,21 @@ import 'dart:convert';
 
 class Place {
   String menuUrl;
-  String name;
+  String? name;
   String? userComment;
   DateTime dateVisited;
-  //TODO NULL
   double? latitude;
   double? longitude;
+  String? id;
 
   Place({
     required this.menuUrl,
-    required this.name,
+    this.name,
     this.userComment,
     required this.dateVisited,
-    required this.latitude,
-    required this.longitude,
+    this.latitude,
+    this.longitude,
+    this.id,
   });
 
   Place copyWith({
@@ -25,6 +26,7 @@ class Place {
     DateTime? dateVisited,
     double? latitude,
     double? longitude,
+    String? id,
   }) {
     return Place(
       menuUrl: menuUrl ?? this.menuUrl,
@@ -33,6 +35,7 @@ class Place {
       dateVisited: dateVisited ?? this.dateVisited,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      id: id ?? this.id,
     );
   }
 
@@ -44,17 +47,19 @@ class Place {
       'dateVisited': dateVisited.millisecondsSinceEpoch,
       'latitude': latitude,
       'longitude': longitude,
+      'id': id,
     };
   }
 
   factory Place.fromMap(Map<String, dynamic> map) {
     return Place(
       menuUrl: map['menuUrl'] ?? '',
-      name: map['name'] ?? '',
+      name: map['name'],
       userComment: map['userComment'],
       dateVisited: DateTime.fromMillisecondsSinceEpoch(map['dateVisited']),
       latitude: map['latitude']?.toDouble(),
       longitude: map['longitude']?.toDouble(),
+      id: map['id'],
     );
   }
 
@@ -64,7 +69,7 @@ class Place {
 
   @override
   String toString() {
-    return 'Place(menuUrl: $menuUrl, name: $name, userComment: $userComment, dateVisited: $dateVisited, latitude: $latitude, longitude: $longitude)';
+    return 'Place(menuUrl: $menuUrl, name: $name, userComment: $userComment, dateVisited: $dateVisited, latitude: $latitude, longitude: $longitude, id: $id)';
   }
 
   @override
@@ -77,7 +82,8 @@ class Place {
         other.userComment == userComment &&
         other.dateVisited == dateVisited &&
         other.latitude == latitude &&
-        other.longitude == longitude;
+        other.longitude == longitude &&
+        other.id == id;
   }
 
   @override
@@ -87,6 +93,7 @@ class Place {
         userComment.hashCode ^
         dateVisited.hashCode ^
         latitude.hashCode ^
-        longitude.hashCode;
+        longitude.hashCode ^
+        id.hashCode;
   }
 }

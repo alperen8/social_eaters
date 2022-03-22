@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_eaters/features/scan_menu.dart';
+import 'package:social_eaters/models/user_model.dart';
+import 'package:social_eaters/services/user_service.dart';
 
 import 'ui/wave_clipper.dart';
 
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
                 ///
                 /// Get triangle widget
-                ///
+
                 _triangle(
                   20.0,
                   10.0,
@@ -63,71 +66,10 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 ///
-                /// Create Box below profile
+                /// Create scan QR button
                 ///
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 170.0, bottom: 30.0),
-                  child: GestureDetector(
-                    onTap: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ScanMenu()));
-                    },
-                    child: Container(
-                      height: 120.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12.withOpacity(0.1),
-                                blurRadius: 10.0,
-                                spreadRadius: 4.0)
-                          ]),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 47.0,
-                                width: 47.0,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50.0)),
-                                    color: Color(0xFFFAF9FC)),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.qr_code,
-                                    color: Color(0xFFB870D0),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 7.0,
-                              ),
-                              const Text("Scan QR",
-                                  style: TextStyle(
-                                      color: Colors.black87,
-                                      fontFamily: "Popins",
-                                      fontWeight: FontWeight.w600))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                buildScanQR(context),
 
-                ///
-                /// Create profile
-                ///
                 Padding(
                     padding: const EdgeInsets.only(top: 72.0, left: 22.0),
                     child: header()),
@@ -151,41 +93,90 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
+              ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text("signout")),
+              ElevatedButton(
+                  onPressed: () async {
+                    UserModel? a = await UserService.instance.getUserInfoById(
+                        FirebaseAuth.instance.currentUser!.uid);
+                    print(a?.name);
+                  },
+                  child: const Text("asd")),
+
               ///
-              /// List Transaction dummy
+              /// List menu dummy
               ///
 
-              _menu("Place 2", "Comment 1"),
-              _menu("Place 3", "Comment 2"),
-              _menu("Place 4", "Comment 3"),
-              _menu("Place 5", "Comment 4"),
+              // _menu("Place 2", "Comment 1"),
+              // _menu("Place 3", "Comment 2"),
+              // _menu("Place 4", "Comment 3"),
+              // _menu("Place 5", "Comment 4"),
             ])
           ],
         ),
       ),
     );
-    // return Scaffold(
-    //   appBar: AppBar(),
-    //   body: Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: <Widget>[
-    //         ElevatedButton(
-    //             onPressed: () async {
-    //               await Navigator.push(
-    //                   context,
-    //                   MaterialPageRoute(
-    //                       builder: (context) => const ScanMenu()));
-    //             },
-    //             child: const Text("Scan Menu")),
-    //         Text(
-    //           'HOME PAGE',
-    //           style: Theme.of(context).textTheme.headline4,
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+  }
+
+  Padding buildScanQR(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 20.0, right: 20.0, top: 170.0, bottom: 30.0),
+      child: GestureDetector(
+        onTap: () async {
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ScanMenu()));
+        },
+        child: Container(
+          height: 120.0,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12.withOpacity(0.1),
+                    blurRadius: 10.0,
+                    spreadRadius: 4.0)
+              ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 47.0,
+                    width: 47.0,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        color: Color(0xFFFAF9FC)),
+                    child: const Center(
+                      child: Icon(
+                        Icons.qr_code,
+                        color: Color(0xFFB870D0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 7.0,
+                  ),
+                  const Text("Scan QR",
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w600))
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _menu(String title, String comment) {
@@ -265,7 +256,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   ///
-  /// Create profile widget
+  /// Create welcome widget
   ///
   Widget header() {
     return Row(
@@ -301,13 +292,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-///
-/// Create wave appbar
-///
-
-///
-/// Create triangle clipper
-///
 class TriangleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
