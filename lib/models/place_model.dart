@@ -29,8 +29,8 @@ class Place {
       'name': name,
       'comment': userComment,
       'dateVisited': dateVisited.toString(),
-      'latitude': latitude?.toString(),
-      'longtitude': longtitude?.toString(),
+      'latitude': latitude,
+      'longtitude': longtitude,
     };
   }
 
@@ -40,8 +40,8 @@ class Place {
       name: map['name'],
       userComment: map['userComment'],
       dateVisited: DateTime.parse(map['dateVisited']),
-      latitude: double.tryParse(map['latitude']),
-      longtitude: double.tryParse(map['longtitude']),
+      latitude: map['latitude'],
+      longtitude: map['longtitude'],
       id: map['id'],
       user: map['userCreated'] != null
           ? UserModel.fromMap(map['userCreated'][0])

@@ -45,7 +45,7 @@ class _MapViewPageState extends State<MapViewPage> {
       if (place.latitude != null) {
         markers.add(Marker(
           markerId: MarkerId(place.name ?? "Unnamed Place"),
-          position: LatLng(place.latitude!, place.longitude!),
+          position: LatLng(place.latitude!, place.longtitude!),
           infoWindow: InfoWindow(
               title: place.name,
               snippet: "tap to see  the menu",
