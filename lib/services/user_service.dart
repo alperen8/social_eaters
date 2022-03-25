@@ -58,7 +58,15 @@ class UserService {
     Response response = await Dio().get(
         AppConstants.apiUrl + "/followingUsersMenus",
         queryParameters: data);
-    print(response);
+    List dataList = response.data["Followers"];
+    for (Map<String, dynamic> map in dataList) {
+      List list = map["followingUsersMenus"];
+      for (Map<String, dynamic> innerMap in list) {
+        places.add(Place.fromMap(innerMap));
+      }
+    }
+
+    print(places);
     return places;
   }
 

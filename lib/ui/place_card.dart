@@ -40,6 +40,7 @@ class PlaceCard extends StatelessWidget {
               ],
             ),
             buildMessage(context),
+            if (place.user != null) Text(place.user!.name!),
             Text(place.dateVisited.toString())
           ],
         ),

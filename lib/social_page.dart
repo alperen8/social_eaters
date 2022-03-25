@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:social_eaters/home_page.dart';
+import 'package:social_eaters/models/place_model.dart';
+import 'package:social_eaters/services/auth_service.dart';
+import 'package:social_eaters/services/user_service.dart';
+import 'package:social_eaters/ui/place_card.dart';
 
 import 'ui/wave_clipper.dart';
 
@@ -18,6 +22,7 @@ class _SocialPageState extends State<SocialPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: <Widget>[
             Stack(
@@ -96,6 +101,29 @@ class _SocialPageState extends State<SocialPage> {
                       ),
                     ),
                   ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                FutureBuilder(
+                  future: UserService.instance.getfollowingUsersMenus(
+                      AuthenticationService.instance.getUserId()),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List<Place> places = snapshot.data;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: places.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return PlaceCard(place: places[index]);
+                        },
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
                 ),
               ],
             ),

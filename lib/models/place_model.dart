@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:social_eaters/models/user_model.dart';
+
 class Place {
   String menuUrl;
   String? name;
   String? userComment;
   DateTime dateVisited;
   double? latitude;
-  double? longitude;
+  double? longtitude;
   String? id;
+  UserModel? user;
 
   Place({
     required this.menuUrl,
@@ -15,29 +18,10 @@ class Place {
     this.userComment,
     required this.dateVisited,
     this.latitude,
-    this.longitude,
+    this.longtitude,
     this.id,
+    this.user,
   });
-
-  Place copyWith({
-    String? menuUrl,
-    String? name,
-    String? userComment,
-    DateTime? dateVisited,
-    double? latitude,
-    double? longtitude,
-    String? id,
-  }) {
-    return Place(
-      menuUrl: menuUrl ?? this.menuUrl,
-      name: name ?? this.name,
-      userComment: userComment ?? this.userComment,
-      dateVisited: dateVisited ?? this.dateVisited,
-      latitude: latitude ?? this.latitude,
-      longitude: longtitude ?? this.longitude,
-      id: id ?? this.id,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -46,7 +30,7 @@ class Place {
       'comment': userComment,
       'dateVisited': dateVisited.toString(),
       'latitude': latitude?.toString(),
-      'longtitude': longitude?.toString(),
+      'longtitude': longtitude?.toString(),
     };
   }
 
@@ -55,44 +39,17 @@ class Place {
       menuUrl: map['menuUrl'] ?? '',
       name: map['name'],
       userComment: map['userComment'],
-      dateVisited: DateTime.fromMillisecondsSinceEpoch(map['dateVisited']),
-      latitude: map['latitude']?.toDouble(),
-      longitude: map['longitude']?.toDouble(),
+      dateVisited: DateTime.parse(map['dateVisited']),
+      latitude: double.tryParse(map['latitude']),
+      longtitude: double.tryParse(map['longtitude']),
       id: map['id'],
+      user: map['userCreated'] != null
+          ? UserModel.fromMap(map['userCreated'][0])
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Place.fromJson(String source) => Place.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'Place(menuUrl: $menuUrl, name: $name, userComment: $userComment, dateVisited: $dateVisited, latitude: $latitude, longitude: $longitude, id: $id)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Place &&
-        other.menuUrl == menuUrl &&
-        other.name == name &&
-        other.userComment == userComment &&
-        other.dateVisited == dateVisited &&
-        other.latitude == latitude &&
-        other.longitude == longitude &&
-        other.id == id;
-  }
-
-  @override
-  int get hashCode {
-    return menuUrl.hashCode ^
-        name.hashCode ^
-        userComment.hashCode ^
-        dateVisited.hashCode ^
-        latitude.hashCode ^
-        longitude.hashCode ^
-        id.hashCode;
-  }
 }

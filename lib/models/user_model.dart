@@ -50,7 +50,15 @@ class UserModel {
       status: map['status']?.toInt(),
     );
   }
-
+  factory UserModel.forPlaceList(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['id'] ?? '',
+      name: map['name'],
+      surname: map['surname'],
+      mail: map['mail'],
+      status: map['status']?.toInt(),
+    );
+  }
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) =>

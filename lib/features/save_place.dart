@@ -42,7 +42,7 @@ class _SaveMenuPageState extends State<SaveMenuPage> {
                     userComment: commentController.text,
                     dateVisited: date,
                     latitude: locationData.latitude!,
-                    longitude: locationData.longitude!,
+                    longtitude: locationData.longitude!,
                   );
 
                   LocalStorage.instance
