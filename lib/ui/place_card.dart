@@ -28,6 +28,7 @@ class PlaceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //WHEN THERE IS LOCATION INFO THEN THIS ICON WILL BE BLUE
             Row(
               children: [
                 place.latitude == null
@@ -39,8 +40,17 @@ class PlaceCard extends StatelessWidget {
                 Text(place.name ?? ""),
               ],
             ),
+            //USER COMMENT
             buildMessage(context),
+            //BUTTON TO OPEN MENU
+            IconButton(
+                onPressed: () {
+                  _launchURL(context);
+                },
+                icon: const Icon(Icons.menu_book)),
+            //USER NAME WHEN THERE IS USER(WHEN IT COMES FROM DB IT HAS A USER FIELD FILLED)
             if (place.user != null) Text(place.user!.name!),
+            //DATE FIELD
             Text(place.dateVisited.toString())
           ],
         ),
@@ -48,21 +58,15 @@ class PlaceCard extends StatelessWidget {
     );
   }
 
-  Row buildMessage(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+  Column buildMessage(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         if (place.userComment != null && place.userComment != "")
           SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
               child: Text(place.userComment!)),
         context.emptySizedWidthBoxLow,
-        IconButton(
-            onPressed: () {
-              _launchURL(context);
-            },
-            icon: const Icon(Icons.menu_book))
       ],
     );
   }
