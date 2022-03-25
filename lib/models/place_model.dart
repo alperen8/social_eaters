@@ -38,7 +38,7 @@ class Place {
     return Place(
       menuUrl: map['menuUrl'] ?? '',
       name: map['name'],
-      userComment: map['userComment'],
+      userComment: map['comment'],
       dateVisited: DateTime.parse(map['dateVisited']),
       latitude: map['latitude'],
       longtitude: map['longtitude'],
