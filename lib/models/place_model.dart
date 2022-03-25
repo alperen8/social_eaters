@@ -42,8 +42,8 @@ class Place {
   Map<String, dynamic> toMap() {
     return {
       'menuUrl': menuUrl,
-      name ?? 'name': name,
-      userComment ?? 'comment': userComment,
+      'name': name,
+      'comment': userComment,
       'dateVisited': dateVisited.toString(),
       'latitude': latitude?.toString(),
       'longtitude': longitude?.toString(),

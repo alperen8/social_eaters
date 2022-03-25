@@ -51,6 +51,17 @@ class UserService {
     }
   }
 
+  Future<List<Place>> getfollowingUsersMenus(String id) async {
+    Map<String, dynamic> data = {"followerId": id};
+    List<Place> places = [];
+
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/followingUsersMenus",
+        queryParameters: data);
+    print(response);
+    return places;
+  }
+
 //TODO async
   recordUser(String? name, String? surname, String? mail, String id) {
     Map<String, dynamic> data = {

@@ -3,6 +3,7 @@ import 'package:location/location.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
+import 'package:social_eaters/services/user_service.dart';
 
 class SaveMenuPage extends StatefulWidget {
   const SaveMenuPage(this.menuLink, {Key? key}) : super(key: key);
@@ -47,6 +48,7 @@ class _SaveMenuPageState extends State<SaveMenuPage> {
                   LocalStorage.instance
                       .addToStringList(PreferencesKeys.places, place.toJson())
                       .then((value) => Navigator.pop(context));
+                  UserService.instance.recordPlace(place);
                 },
                 child: const Text("save place"))
           ],
