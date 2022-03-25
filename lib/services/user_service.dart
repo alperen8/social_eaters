@@ -4,6 +4,8 @@ import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/models/user_model.dart';
 import 'package:social_eaters/services/auth_service.dart';
 
+//TODO error and success handling
+
 class UserService {
   static final UserService _instance = UserService._init();
   UserService._init();
@@ -15,6 +17,7 @@ class UserService {
   factory UserService() {
     return _instance;
   }
+
   Future<UserModel?> getUserInfoById(String id) async {
     Map<String, dynamic> data = {"id": id};
     UserModel? user;
@@ -48,6 +51,7 @@ class UserService {
     }
   }
 
+//TODO async
   recordUser(String? name, String? surname, String? mail, String id) {
     Map<String, dynamic> data = {
       "name": name,
@@ -59,6 +63,44 @@ class UserService {
       Dio().post(AppConstants.apiUrl + "/createUser", data: data);
     } catch (e) {
       print(e);
+    }
+  }
+
+  followUser(String followingId) async {
+    String currentUserId = AuthenticationService.instance.getUserId();
+    Map<String, dynamic> data = {
+      "followerId": currentUserId,
+      "followingId": followingId
+    };
+
+    Response response = await Dio().post(
+      AppConstants.apiUrl + "/FollowUser",
+      data: data,
+    );
+
+    if (response.statusCode == null) {
+      throw Exception(response.statusMessage);
+    }
+  }
+
+  getFollowingList(String id) async {
+    Map<String, dynamic> data = {
+      "id": id,
+    };
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/getFollowingUsersByFollowerId",
+        queryParameters: data);
+
+    //conversion of response to list of users
+    List responseAsList = response.data["Followers"];
+    List<UserModel> followingUsers = [];
+    responseAsList.every((element) {
+      followingUsers.add(UserModel.fromMap(element["followingUsersInfo"][0]));
+      return true;
+    });
+
+    if (response.statusCode == null) {
+      throw Exception(response.statusMessage);
     }
   }
 }
