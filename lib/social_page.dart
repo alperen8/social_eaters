@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:social_eaters/home_page.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/services/auth_service.dart';
@@ -51,7 +52,40 @@ class _SocialPageState extends State<SocialPage> {
                       left: 20.0, right: 20.0, top: 170.0, bottom: 30.0),
                   child: GestureDetector(
                     onTap: () async {
-                      //TODO
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Your QR'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  const Text(
+                                      'Users can follow you by scanning this QR code.'),
+                                  SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: QrImage(
+                                      data: AuthenticationService.instance
+                                          .getUserId(),
+                                      version: QrVersions.auto,
+                                      size: 100.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Approve'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       height: 120.0,

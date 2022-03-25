@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:social_eaters/features/save_place.dart';
+import 'package:social_eaters/services/user_service.dart';
 
 class ScanMenu extends StatefulWidget {
   const ScanMenu({
@@ -66,8 +67,13 @@ class _QRViewExampleState extends State<ScanMenu> {
         result = scanData;
       });
       if (!launch) {
-        _launchURL(context, result!.code);
-        launch = true;
+        if (result!.code!.contains(".")) {
+          _launchURL(context, result!.code);
+          launch = true;
+        } else {
+          UserService.instance.followUser(result!.code!);
+          launch = true;
+        }
       }
     });
   }

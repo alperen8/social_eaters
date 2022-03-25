@@ -43,6 +43,8 @@ dependencies:
   firebase_auth: ^3.3.8
   # http client
   dio: ^4.0.4
+  # qr code generator
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
