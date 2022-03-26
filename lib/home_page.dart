@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:social_eaters/features/scan_menu.dart';
 import 'package:social_eaters/models/place_model.dart';
+import 'package:social_eaters/models/user_model.dart';
 import 'package:social_eaters/services/auth_service.dart';
 import 'package:social_eaters/services/user_service.dart';
-
+import 'package:social_eaters/ui/place_card.dart';
+import 'features/maps/map_view.dart';
 import 'ui/wave_clipper.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,11 +18,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Place> friendsPlaces = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: <Widget>[
             Stack(
@@ -72,44 +76,65 @@ class _HomePageState extends State<HomePage> {
 
                 Padding(
                     padding: const EdgeInsets.only(top: 72.0, left: 22.0),
-                    child: header()),
+                    child: profileAndWelcomeText()),
               ],
             ),
             Column(children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const <Widget>[
-                    Text(
-                      "Last visited places",
+                  children: <Widget>[
+                    const Text(
+                      "Friends Feed",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: "Sans",
                           fontWeight: FontWeight.w800,
                           fontSize: 15.5),
                     ),
+                    IconButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MapViewPage(friendsPlaces)));
+                      },
+                      icon: const Icon(Icons.map),
+                    ),
                   ],
                 ),
               ),
-
-              ElevatedButton(
-                  onPressed: () {
-                    AuthenticationService.instance.signOut();
-                  },
-                  child: const Text("signout")),
-              ElevatedButton(
-                  onPressed: () async {
-                    UserService.instance.recordPlace(
-                        Place(menuUrl: "menuurl", dateVisited: DateTime.now()));
-                  },
-                  child: const Text("asd")),
+              Column(
+                children: [
+                  FutureBuilder(
+                    future: UserService.instance.getfollowingUsersMenus(
+                        AuthenticationService.instance.getUserId()),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        friendsPlaces = snapshot.data;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: friendsPlaces.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return PlaceCard(place: friendsPlaces[index]);
+                          },
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                ],
+              ),
 
               ///
               /// List menu dummy
               ///
 
-              // _menu("Place 2", "Comment 1"),
+              //_menu("Place 2", "Comment 1"),
               // _menu("Place 3", "Comment 2"),
               // _menu("Place 4", "Comment 3"),
               // _menu("Place 5", "Comment 4"),
@@ -257,7 +282,7 @@ class _HomePageState extends State<HomePage> {
   ///
   /// Create welcome widget
   ///
-  Widget header() {
+  Widget profileAndWelcomeText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,27 +290,38 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           width: 15.0,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            Text(
-              "User Name here",
-              style: TextStyle(
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17.0,
-                  color: Colors.white),
-            ),
-            Text(
-              "Welcome String",
-              style: TextStyle(
-                  fontFamily: "Sans",
-                  fontWeight: FontWeight.w300,
-                  color: Colors.white54),
-            )
-          ],
-        )
+        FutureBuilder(
+          future: UserService.instance
+              .getUserInfoById(AuthenticationService.instance.getUserId()),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              UserModel user = snapshot.data;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    user.name!,
+                    style: const TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.0,
+                        color: Colors.white),
+                  ),
+                  const Text(
+                    "Welcome String",
+                    style: TextStyle(
+                        fontFamily: "Sans",
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white54),
+                  )
+                ],
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
       ],
     );
   }
