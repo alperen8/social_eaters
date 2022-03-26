@@ -7,8 +7,8 @@ import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
 
 class MapViewPage extends StatefulWidget {
-  const MapViewPage({Key? key}) : super(key: key);
-
+  const MapViewPage(this.places, {Key? key}) : super(key: key);
+  final List<Place> places;
   @override
   _MapViewPageState createState() => _MapViewPageState();
 }
@@ -17,7 +17,7 @@ class _MapViewPageState extends State<MapViewPage> {
   final LatLng _initialcameraposition = const LatLng(20.5937, 78.9629);
   late GoogleMapController _controller;
   final Location _location = Location();
-  List<Place> places = [];
+
   List<Marker> markers = [];
 
   Future<void> onMapCreated(GoogleMapController _cntlr) async {
@@ -32,16 +32,16 @@ class _MapViewPageState extends State<MapViewPage> {
     );
   }
 
-  getVisitedPlaces() {
-    List<String> stringData =
-        LocalStorage.instance.getStringList(PreferencesKeys.places);
-    for (String string in stringData) {
-      places.add(Place.fromJson(string));
-    }
-  }
+  // getVisitedPlaces() {
+  //   List<String> stringData =
+  //       LocalStorage.instance.getStringList(PreferencesKeys.places);
+  //   for (String string in stringData) {
+  //     places.add(Place.fromJson(string));
+  //   }
+  // }
 
   createMarkers() {
-    for (Place place in places) {
+    for (Place place in widget.places) {
       if (place.latitude != null) {
         markers.add(Marker(
           markerId: MarkerId(place.name ?? "Unnamed Place"),
@@ -60,7 +60,6 @@ class _MapViewPageState extends State<MapViewPage> {
 
   @override
   void initState() {
-    getVisitedPlaces();
     createMarkers();
     super.initState();
   }

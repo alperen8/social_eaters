@@ -72,7 +72,7 @@ class _MenuPageState extends State<MenuPage> {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MapViewPage()));
+                              builder: (context) => MapViewPage(places)));
                     },
                     child: Container(
                       height: 120.0,
