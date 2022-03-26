@@ -70,6 +70,22 @@ class UserService {
     return places;
   }
 
+  Future<int> getFollowerUserCount(String id) async {
+    Map<String, dynamic> data = {"id": id};
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/getFollowersIdList",
+        queryParameters: data);
+    return response.data["Followers"].length;
+  }
+
+  Future<int> getFollowingUserCount(String id) async {
+    Map<String, dynamic> data = {"id": id};
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/getFollowingUsersIdList",
+        queryParameters: data);
+    return response.data["Followers"].length;
+  }
+
 //TODO async
   recordUser(String? name, String? surname, String? mail, String id) {
     Map<String, dynamic> data = {
