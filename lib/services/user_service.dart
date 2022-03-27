@@ -66,7 +66,6 @@ class UserService {
       }
     }
 
-    print(places);
     return places;
   }
 
