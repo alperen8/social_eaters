@@ -173,8 +173,7 @@ class _SocialPageState extends State<SocialPage> {
   GestureDetector buildFollowingColumn() {
     return GestureDetector(
       onTap: () {
-        //TODO BUILD USER LIST
-        buildUserList(context);
+        buildUserList(context, 1);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,8 +255,7 @@ class _SocialPageState extends State<SocialPage> {
   GestureDetector buildFollowersColumn() {
     return GestureDetector(
       onTap: () {
-        //TODO BUILD USER LIST
-        buildUserList(context);
+        buildUserList(context, 2);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,37 +326,63 @@ buildUsersQrDialog(BuildContext context) {
   );
 }
 
-//TODO USER LIST UI
-buildUserList(BuildContext context) {
+buildUserList(BuildContext context, int type) {
   showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Your QR'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              const Text('Users can follow you by scanning this QR code.'),
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: QrImage(
-                  data: AuthenticationService.instance.getUserId(),
-                  version: QrVersions.auto,
-                  size: 100.0,
-                ),
+      return SizedBox(
+        child: AlertDialog(
+          title: const Text('Following Users',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.w600)),
+          content: Column(
+            children: [
+              FutureBuilder(
+                future: type == 1
+                    ? UserService.instance.getFollowingList(
+                        AuthenticationService.instance.getUserId())
+                    : UserService.instance.getFollowerList(
+                        AuthenticationService.instance.getUserId()),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    List<UserModel> userList = snapshot.data;
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: MediaQuery.of(context).size.width,
+                      child: userList.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: userList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Row(
+                                  children: [
+                                    Text(userList[index].name! +
+                                        " " +
+                                        userList[index].surname!),
+                                  ],
+                                );
+                              },
+                            )
+                          : const Text("there is no one here."),
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
               ),
             ],
           ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Approve'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       );
     },
   );

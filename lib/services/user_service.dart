@@ -118,17 +118,18 @@ class UserService {
     }
   }
 
-  getFollowingList(String id) async {
+  Future<List<UserModel>> getFollowingList(String id) async {
     Map<String, dynamic> data = {
       "id": id,
     };
+    List<UserModel> followingUsers = [];
     Response response = await Dio().get(
         AppConstants.apiUrl + "/getFollowingUsersByFollowerId",
         queryParameters: data);
 
     //conversion of response to list of users
     List responseAsList = response.data["Followers"];
-    List<UserModel> followingUsers = [];
+
     responseAsList.every((element) {
       followingUsers.add(UserModel.fromMap(element["followingUsersInfo"][0]));
       return true;
@@ -137,5 +138,29 @@ class UserService {
     if (response.statusCode == null) {
       throw Exception(response.statusMessage);
     }
+    return followingUsers;
+  }
+
+  Future<List<UserModel>> getFollowerList(String id) async {
+    Map<String, dynamic> data = {
+      "id": id,
+    };
+    List<UserModel> followers = [];
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/getFollowersListWithInfo",
+        queryParameters: data);
+
+    //conversion of response to list of users
+    List responseAsList = response.data["Followers"];
+
+    responseAsList.every((element) {
+      followers.add(UserModel.fromMap(element["followingUsersInfo"][0]));
+      return true;
+    });
+
+    if (response.statusCode == null) {
+      throw Exception(response.statusMessage);
+    }
+    return followers;
   }
 }
