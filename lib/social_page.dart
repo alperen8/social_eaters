@@ -332,11 +332,17 @@ buildUserList(BuildContext context, int type) {
     builder: (BuildContext context) {
       return SizedBox(
         child: AlertDialog(
-          title: const Text('Following Users',
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.w600)),
+          title: type == 1
+              ? const Text('Following User',
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w600))
+              : const Text('Followers',
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w600)),
           content: Column(
             children: [
               FutureBuilder(
