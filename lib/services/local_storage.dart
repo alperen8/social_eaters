@@ -44,6 +44,39 @@ class LocalStorage {
     return list;
   }
 
+  bool addPlaceToFavorites(String placeId) {
+    bool isAdded = false;
+
+    List<String>? storageList =
+        _instance._preferences!.getStringList(PreferencesKeys.favPlaces.name);
+    if (storageList != null) {
+      if (!isItemOnTheFavoriteList(placeId)) {
+        storageList.add(placeId);
+        _instance._preferences!
+            .setStringList(PreferencesKeys.favPlaces.name, storageList);
+        isAdded = true;
+      }
+    } else {
+      addToStringList(PreferencesKeys.favPlaces, placeId);
+      isAdded = true;
+    }
+    return isAdded;
+  }
+
+  bool isItemOnTheFavoriteList(String? placeId) {
+    bool isOnTheList = false;
+    List<String>? storageList =
+        _instance._preferences!.getStringList(PreferencesKeys.favPlaces.name);
+    if (storageList != null) {
+      for (String id in storageList) {
+        if (placeId == id) {
+          isOnTheList = true;
+        }
+      }
+    }
+    return isOnTheList;
+  }
+
   String? getStringValue(PreferencesKeys key) =>
       _instance._preferences!.getString(key.name);
 

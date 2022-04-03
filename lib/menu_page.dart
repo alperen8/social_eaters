@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:social_eaters/features/maps/map_view.dart';
 import 'package:social_eaters/home_page.dart';
 import 'package:social_eaters/models/place_model.dart';
+import 'package:social_eaters/services/auth_service.dart';
 import 'package:social_eaters/services/local_storage.dart';
 import 'package:social_eaters/services/preferences_keys.dart';
+import 'package:social_eaters/services/user_service.dart';
 import 'package:social_eaters/ui/place_card.dart';
 
 import 'features/scan_menu.dart';
@@ -128,16 +130,32 @@ class _MenuPageState extends State<MenuPage> {
                     child: header()),
               ],
             ),
-            SizedBox(
-              //TODO THIS SIZING NEEDS BETTER SOLUTION I DONT WANT TO GIVE A CONST SIZE
-              height: 150,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: places.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return PlaceCard(place: places[index]);
-                },
-              ),
+            FutureBuilder(
+              future: UserService.instance.getFavoritePlaces(
+                  AuthenticationService.instance.getUserId()),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  List<Place> places = snapshot.data;
+                  if (places.isNotEmpty) {
+                    return SizedBox(
+                      //TODO CONSTAND HEIGHT SEEMS VERY WRONG HERE NEEDS BETTER SOLUTION
+                      height: 250,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: places.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return PlaceCard(place: places[index]);
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Text("no favorite place");
+                    //TODO needs add favorite place button here
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
             ),
             ListView.builder(
               shrinkWrap: true,

@@ -1,1 +1,1 @@
-enum PreferencesKeys { places }
+enum PreferencesKeys { places, favPlaces }

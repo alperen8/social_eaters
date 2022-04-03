@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_eaters/config/constanst.dart';
 import 'package:social_eaters/models/place_model.dart';
 import 'package:social_eaters/models/user_model.dart';
 import 'package:social_eaters/services/auth_service.dart';
+import 'package:social_eaters/services/local_storage.dart';
 
 //TODO error and success handling
 
@@ -83,6 +85,43 @@ class UserService {
         AppConstants.apiUrl + "/getFollowingUsersIdList",
         queryParameters: data);
     return response.data["Followers"].length;
+  }
+
+  //TODO IT SHOULD RETURN A BOOL ACCORDING TO RESULT AND HAVE A SNACK BAR AT THE PLACES THIS FUNC CALLED
+  addPlaceToFavorites(String? placeId) async {
+    String id = AuthenticationService.instance.getUserId();
+    Map<String, dynamic> data = {
+      "id": id,
+      "placeId": placeId,
+    };
+    //TODO AFTER HANDLING ISSUE 1.1(its in google keep) THIS IF BLOCK WILL BE DELETED
+    if (placeId != null) {
+      Response response = await Dio().post(
+        AppConstants.apiUrl + "/addFavoritePlace",
+        data: data,
+      );
+      //  LocalStorage.instance.addPlaceToFavorites(placeId);
+      if (response.statusCode == null) {
+        throw Exception(response.statusMessage);
+      }
+    }
+  }
+
+  Future<List<Place>> getFavoritePlaces(String id) async {
+    Map<String, dynamic> data = {"id": id};
+    Response response = await Dio().get(
+        AppConstants.apiUrl + "/getFavoritePlacesById",
+        queryParameters: data);
+    List<Place> places = [];
+    List dataList = response.data["Favorites"];
+    for (Map<String, dynamic> map in dataList) {
+      List list = map["favoritedPlace"];
+      for (Map<String, dynamic> innerMap in list) {
+        places.add(Place.fromMap(innerMap));
+        LocalStorage.instance.addPlaceToFavorites(Place.fromMap(innerMap).id!);
+      }
+    }
+    return places;
   }
 
 //TODO async
