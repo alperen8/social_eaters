@@ -22,7 +22,7 @@ class _SocialPageState extends State<SocialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, //?
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Column(
@@ -84,7 +84,85 @@ class _SocialPageState extends State<SocialPage> {
                     child: profileAndWelcomeText()),
               ],
             ),
-            buildYourQRButton(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    "Favorite Places",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Sans",
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15.5),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    //TODO MAP VIEW FOR PROFILE, ALL PLACES AND FAVS(FAVS WITH ANOTHER MARKER COLOR)
+
+                    // await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) =>
+                    //             MapViewPage(friendsPlaces)));
+                  },
+                  icon: const Icon(Icons.map),
+                ),
+              ],
+            ),
+            FutureBuilder(
+              future: UserService.instance.getFavoritePlaces(
+                  AuthenticationService.instance.getUserId()),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  List<Place> places = snapshot.data;
+                  if (places.isNotEmpty) {
+                    return SizedBox(
+                      //TODO CONSTAND HEIGHT SEEMS VERY WRONG HERE NEEDS BETTER SOLUTION
+                      height: 250,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: places.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return PlaceCard(place: places[index]);
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Text("no favorite place");
+                    //TODO needs add favorite place button here
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    "Lists",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Sans",
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15.5),
+                  ),
+                ),
+              ],
+            ),
+            const Text(
+              "not implemented yet",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: "Sans",
+                fontSize: 15.5,
+              ),
+            ),
           ],
         ),
       ),
@@ -93,12 +171,8 @@ class _SocialPageState extends State<SocialPage> {
 
   Widget profileAndWelcomeText() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        const SizedBox(
-          width: 15.0,
-        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +187,26 @@ class _SocialPageState extends State<SocialPage> {
             ),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.only(right: 30),
+          child: GestureDetector(
+            onTap: () {
+              buildUsersQrDialog(context);
+            },
+            child: Column(
+              children: const [
+                Icon(
+                  Icons.qr_code_2,
+                  color: Colors.white,
+                ),
+                Text(
+                  "Your QR",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

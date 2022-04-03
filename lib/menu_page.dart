@@ -130,33 +130,6 @@ class _MenuPageState extends State<MenuPage> {
                     child: header()),
               ],
             ),
-            FutureBuilder(
-              future: UserService.instance.getFavoritePlaces(
-                  AuthenticationService.instance.getUserId()),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  List<Place> places = snapshot.data;
-                  if (places.isNotEmpty) {
-                    return SizedBox(
-                      //TODO CONSTAND HEIGHT SEEMS VERY WRONG HERE NEEDS BETTER SOLUTION
-                      height: 250,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: places.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return PlaceCard(place: places[index]);
-                        },
-                      ),
-                    );
-                  } else {
-                    return const Text("no favorite place");
-                    //TODO needs add favorite place button here
-                  }
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
