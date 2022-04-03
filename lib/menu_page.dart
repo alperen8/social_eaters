@@ -128,19 +128,25 @@ class _MenuPageState extends State<MenuPage> {
                     child: header()),
               ],
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: ListView.builder(
-                    itemCount: places.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return PlaceCard(place: places[index]);
-                    },
-                  ),
-                ),
-              ],
-            )
+            SizedBox(
+              //TODO THIS SIZING NEEDS BETTER SOLUTION I DONT WANT TO GIVE A CONST SIZE
+              height: 150,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: places.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return PlaceCard(place: places[index]);
+                },
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: places.length,
+              itemBuilder: (BuildContext context, int index) {
+                return PlaceCard(place: places[index]);
+              },
+            ),
           ],
         ),
       ),
