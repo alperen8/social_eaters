@@ -65,6 +65,9 @@ class _PlaceCardState extends State<PlaceCard> {
                     } else {
                       UserService.instance.addPlaceToFavorites(widget.place.id);
                     }
+
+                    //TODO THIS WILL BE DONE IN CONDITIONAL BLOCKS ACCORDING TO STATUS
+                    //NOW IT WORKS ANYWAY
                     isFavorite = !isFavorite;
 
                     //TODO ADD TOAST THAT SAYS ADDED TO FAVS HERE
