@@ -1,6 +1,6 @@
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:intl/intl.dart';
 import 'package:social_eaters/models/place_model.dart';
-
 import '/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +51,7 @@ class PlaceCard extends StatelessWidget {
             //USER NAME WHEN THERE IS USER(WHEN IT COMES FROM DB IT HAS A USER FIELD FILLED)
             if (place.user != null) Text(place.user!.name!),
             //DATE FIELD
-            Text(place.dateVisited.toString())
+            Text(DateFormat.yMMMMd().format(place.dateVisited))
           ],
         ),
       ),
