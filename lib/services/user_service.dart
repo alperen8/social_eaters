@@ -107,6 +107,23 @@ class UserService {
     }
   }
 
+  //TODO IT SHOULD RETURN A BOOL ACCORDING TO RESULT AND HAVE A SNACK BAR AT THE PLACES THIS FUNC CALLED
+  deletePlaceFromFavorites(String? placeId) async {
+    String id = AuthenticationService.instance.getUserId();
+    Map<String, dynamic> data = {
+      "userId": id,
+      "placeId": placeId,
+    };
+    Response response = await Dio().delete(
+      AppConstants.apiUrl + "/deletePlaceFromFavoriteList",
+      data: data,
+    );
+    LocalStorage.instance.deletePlaceFromFavorites(placeId);
+    if (response.statusCode == null) {
+      throw Exception(response.statusMessage);
+    }
+  }
+
   Future<List<Place>> getFavoritePlaces(String id) async {
     Map<String, dynamic> data = {"id": id};
     Response response = await Dio().get(

@@ -61,13 +61,14 @@ class _PlaceCardState extends State<PlaceCard> {
                 onPressed: () {
                   setState(() {
                     if (isFavorite) {
-                      //TODO DELETE FROM FAVS
+                      UserService.instance
+                          .deletePlaceFromFavorites(widget.place.id);
                     } else {
                       UserService.instance.addPlaceToFavorites(widget.place.id);
                     }
 
-                    //TODO THIS WILL BE DONE IN CONDITIONAL BLOCKS ACCORDING TO STATUS
-                    //NOW IT WORKS ANYWAY
+                    //TODO THIS WILL BE DONE IN CONDITIONAL BLOCKS ACCORDING TO STATUS NOW IT WORKS ANYWAY
+
                     isFavorite = !isFavorite;
 
                     //TODO ADD TOAST THAT SAYS ADDED TO FAVS HERE

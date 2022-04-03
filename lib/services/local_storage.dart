@@ -63,6 +63,30 @@ class LocalStorage {
     return isAdded;
   }
 
+  //TODO placeid will not be nullable after issue 1.1 fixed
+  bool deletePlaceFromFavorites(String? placeId) {
+    bool isDeleted = false;
+    int lengthBefore;
+    int lengthAfter;
+    List<String>? storageList =
+        _instance._preferences!.getStringList(PreferencesKeys.favPlaces.name);
+    lengthBefore = storageList!.length;
+    storageList.removeWhere((element) => element == placeId);
+    lengthAfter = storageList.length;
+    _instance._preferences!
+        .setStringList(PreferencesKeys.favPlaces.name, storageList);
+
+    //i dont think there can be a error because if a place is not favorited it cant be deleted
+    //but a check does not hurt.
+    //TODO
+    //AFTER SOME TESTS IF IT IS REALLY UNNECESARRY DELETE IT ON PROD.
+    if (lengthBefore != lengthAfter) {
+      isDeleted = true;
+    }
+
+    return isDeleted;
+  }
+
   bool isItemOnTheFavoriteList(String? placeId) {
     bool isOnTheList = false;
     List<String>? storageList =
