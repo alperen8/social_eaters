@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "723566101372",
+    "project_id": "social-eaters-c0fda",
+    "storage_bucket": "social-eaters-c0fda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723566101372:android:2f2e0d1d6c74480bc91af9",
+        "android_client_info": {
+          "package_name": "com.example.social_eaters"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723566101372-k0283m36shgegci7v7ivokp4ajk1lsjb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsKFvIDx74606w-WhE_sLyLwIAk3pB5-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723566101372-k0283m36shgegci7v7ivokp4ajk1lsjb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723566101372-4bfivet3ebasfh4pnsji0vr7qtfs8jiu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socialEaters"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
