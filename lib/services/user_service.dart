@@ -142,8 +142,10 @@ class UserService {
   }
 
 //TODO async
-  recordUser(String? name, String? surname, String? mail, String id) {
+  recordUser(
+      String userName, String? name, String? surname, String? mail, String id) {
     Map<String, dynamic> data = {
+      "userName": userName,
       "name": name,
       "surname": surname,
       "mail": mail,
