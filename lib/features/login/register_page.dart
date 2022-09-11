@@ -11,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -47,12 +48,40 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextField(
+                          controller: _userNameController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          cursorColor: Colors.white,
+                          keyboardType: TextInputType.name,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person_pin_outlined,
+                              color: Colors.white,
+                            ),
+                            hintText: 'user name',
+                            prefixText: ' ',
+                            hintStyle: TextStyle(color: Colors.white),
+                            focusColor: Colors.white,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                            )),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                            )),
+                          )),
+                      SizedBox(
+                        height: size.height * 0.02,
+                      ),
+                      TextField(
                           controller: _nameController,
                           style: const TextStyle(
                             color: Colors.white,
                           ),
                           cursorColor: Colors.white,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.name,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
@@ -80,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.white,
                           ),
                           cursorColor: Colors.white,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.name,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
@@ -160,23 +189,28 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          AuthenticationService.instance
-                              .signInWithMail(
-                                  _nameController.text,
-                                  _surnameController.text,
-                                  _emailController.text,
-                                  _passwordController.text)
-                              .then((value) {
-                            if (value) {
-                              return Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BottomNavigationBarView()));
-                            } else {
-                              //TODO ERROR
-                            }
-                          });
+                          try {
+                            AuthenticationService.instance
+                                .signInWithMail(
+                                    _userNameController.text,
+                                    _nameController.text,
+                                    _surnameController.text,
+                                    _emailController.text,
+                                    _passwordController.text)
+                                .then((value) {
+                              if (value) {
+                                return Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomNavigationBarView()));
+                              } else {
+                                //TODO ERROR
+                              }
+                            });
+                          } catch (e) {
+                            print(e);
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 5),

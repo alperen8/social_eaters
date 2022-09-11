@@ -45,8 +45,8 @@ class AuthenticationService {
     return isLoggedIn;
   }
 
-  Future<bool> signInWithMail(
-      String? name, String? surname, String email, String password) async {
+  Future<bool> signInWithMail(String userName, String? name, String? surname,
+      String email, String password) async {
     bool isSignedIn = false;
     try {
       UserCredential userCredential =
@@ -54,8 +54,8 @@ class AuthenticationService {
         email: email,
         password: password,
       );
-      await UserService.instance.recordUser(
-          name, surname, userCredential.user?.email, userCredential.user!.uid);
+      await UserService.instance.recordUser(userName, name, surname,
+          userCredential.user?.email, userCredential.user!.uid);
 
       if (userCredential.user?.uid != null) {
         isSignedIn = true;
