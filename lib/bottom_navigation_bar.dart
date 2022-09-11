@@ -39,24 +39,24 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
-            backgroundColor: AppConstants.mainColor,
+            backgroundColor: Colors.white,
             selectedItemColor: Colors.black,
             currentIndex: _currentIndex,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.menu),
                 label: ("menu"),
-                backgroundColor: AppConstants.mainColor,
+                backgroundColor: Colors.white,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: ("home page"),
-                backgroundColor: AppConstants.mainColor,
+                backgroundColor: Colors.white,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_pin),
                 label: ("social page"),
-                backgroundColor: AppConstants.mainColor,
+                backgroundColor: Colors.white,
               ),
             ],
             onTap: (index) {
