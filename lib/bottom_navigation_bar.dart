@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:social_eaters/config/constanst.dart';
 import 'package:social_eaters/home_page.dart';
 import 'package:social_eaters/menu_page.dart';
 import 'package:social_eaters/social_page.dart';
